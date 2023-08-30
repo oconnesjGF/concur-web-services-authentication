@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "06894a40-bf48-49a4-8794-acaf9d19109a",
+		"name": "SAP Concur Grants",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Client Credentials Grants",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1c22c0bf-27a8-4e6f-ab8e-aa14648e1694",
+						"exec": [
+							"pm.test(\"Initialize\", function () {\r",
+							"\r",
+							"    pm.response.to.not.be.error;\r",
+							"    pm.response.to.not.have.jsonBody(\"error\");\r",
+							"\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var accessToken = jsonData.access_token;\r",
+							"    var refreshToken = jsonData.refresh_token;\r",
+							"    var geoLocation = jsonData.geolocation;\r",
+							"    pm.expect(accessToken.length).to.be.above(0);\r",
+							"    \r",
+							"    pm.environment.set(\"accessToken\", accessToken);\r",
+							"    pm.environment.set(\"refreshToken\", refreshToken);\r",
+							"    pm.environment.set(\"geoLocationURI\", geoLocation.replace(\"https://\",\"\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "4d5e12c8-16ce-47dc-bd44-68b2d9ef2a6f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "concur-correlationid",
+						"value": "unique searchable correlation id",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{clientSecret}}",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{clientId}}",
+							"type": "text"
+						}
+					],
+					"options": {}
+				},
+				"url": "https://{{dataCenterURI}}/oauth2/v0/token",
+				"description": "**Postman Tests**\n\nThis collection will make a call to Concur to obtain an access token that can be used for further API calls. The TEST will update the _environment_ variable \"accessToken\" which should be used by other collections.\n\n**Header Key \"concur-correlationid\"**\n\nPlease note the Header Key \"**concur-correlationid**\" can be used when working with Concur to debug API calls. It should be unique so Concur can track down the call. For example: \"company name - timestamp\" or some sort of UUID.\n\nConcur has central logging so **all** API calls from **all** clients log in the same log...hence it should be unique to help Concur find the call and see what is wrong."
+			},
+			"response": []
+		}
+	]
+}
