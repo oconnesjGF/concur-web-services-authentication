@@ -130,6 +130,41 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{{clientId}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{clientSecret}}",
+							"type": "text"
+						},
+						{
+							"key": "refresh_token",
+							"value": "{{refreshToken}}",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{companyUUID}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "refresh_token",
+							"type": "text"
+						},
+						{
+							"key": "credtype",
+							"value": "authtoken",
+							"type": "text"
+						}
+					]
+				},
 				"url": "https://{{geoLocationURI}}/oauth2/v0/token"
 			},
 			"response": []
