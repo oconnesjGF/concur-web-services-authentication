@@ -107,7 +107,7 @@
 						},
 						{
 							"key": "password",
-							"value": "{{requestToken}}",
+							"value": "{{refreshToken}}",
 							"type": "text"
 						},
 						{
